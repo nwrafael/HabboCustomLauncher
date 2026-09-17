@@ -63,7 +63,8 @@ Public Class Singleton
         RequestedWindow.Height = baseH * escala
 
         Dispatcher.UIThread.Post(Sub()
-                                     Dim screen = RequestedWindow.Screens.ScreenFromVisual(RequestedWindow)
+                                     Dim screen = If(RequestedWindow.Screens.ScreenFromVisual(RequestedWindow), RequestedWindow.Screens.Primary)
+                                     If screen Is Nothing Then Return
                                      Dim wa = screen.WorkingArea
                                      Dim scale = RequestedWindow.RenderScaling
                                      Dim widthPx = CInt(RequestedWindow.ClientSize.Width * scale)
